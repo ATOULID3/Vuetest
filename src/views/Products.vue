@@ -33,6 +33,32 @@
             </span>
           </div>
           <button
+            @click="exportToExcel"
+            class="inline-flex items-center justify-center rounded-md border border-stroke py-2.5 px-6 text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-strokedark dark:hover:border-primary transition-all duration-200"
+          >
+            <svg class="mr-2" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Export Excel
+          </button>
+          <button
+            @click="exportToPDF"
+            class="inline-flex items-center justify-center rounded-md border border-stroke py-2.5 px-6 text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-strokedark dark:hover:border-primary transition-all duration-200"
+          >
+            <svg class="mr-2" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Export PDF
+          </button>
+          <button
             @click="openAddProductModal"
             class="inline-flex items-center justify-center rounded-md bg-primary py-2.5 px-6 text-dark hover:bg-opacity-90 transition-all duration-200"
           >
@@ -51,7 +77,7 @@
                 stroke-linecap="round"
               />
             </svg>
-            Add Product
+            Add New Product
           </button>
         </div>
       </div>
@@ -432,6 +458,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
+import * as XLSX from 'xlsx'
+import html2pdf from 'html2pdf.js'
 
 defineOptions({
   name: 'ProductsPage'
@@ -456,7 +484,7 @@ const products = ref<Product[]>([
     price: 999.99,
     category: 'Electronics',
     stock: 15,
-    image: 'https://images.unsplash.com/photo-1632661674596-79e4d0d2e0c8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aXBob25lfGVufDB8fDB8fHww'
+    image: 'https://images.unsplash.com/photo-1609692814858-f7cd2f0afa4f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
     id: 2,
@@ -607,5 +635,63 @@ const showProductDetails = (product: Product) => {
 const closeProductDetail = () => {
   showProductDetail.value = false
   selectedProduct.value = null
+}
+
+// Export functions
+const exportToExcel = () => {
+  const data = filteredProducts.value.map(product => ({
+    'Product Name': product.name,
+    'SKU': product.sku,
+    'Price': product.price,
+    'Category': product.category,
+    'Stock': product.stock,
+    'Status': product.stock > 0 ? 'In Stock' : 'Out of Stock'
+  }))
+
+  const ws = XLSX.utils.json_to_sheet(data)
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, 'Products')
+  XLSX.writeFile(wb, 'products.xlsx')
+}
+
+const exportToPDF = () => {
+  const element = document.createElement('div')
+  element.innerHTML = `
+    <h1 style="text-align: center; margin-bottom: 20px;">Products List</h1>
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color: #f3f4f6;">
+          <th style="border: 1px solid #ddd; padding: 8px;">Product Name</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">SKU</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Price</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Category</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Stock</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${filteredProducts.value.map(product => `
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;">${product.name}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${product.sku}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">$${product.price}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${product.category}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${product.stock}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${product.stock > 0 ? 'In Stock' : 'Out of Stock'}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `
+
+  const opt = {
+    margin: 1,
+    filename: 'products.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+  }
+
+  html2pdf().set(opt).from(element).save()
 }
 </script> 

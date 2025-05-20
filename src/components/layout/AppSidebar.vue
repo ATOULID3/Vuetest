@@ -264,9 +264,45 @@ const menuGroups = [
       },
       {
         icon: UserCircleIcon,
-        name: "Profile",
-        path: "/profile",
+        name: "Customers",
+        path: "/Customers",
       },
+      {
+        icon: TableIcon,
+        name: "customer-documents",
+        path: "/customers/documents",
+      },
+      {
+        icon: MailIcon,
+        name: "DealPipelines",
+        path: "/DealPipelines",
+      },
+      {
+        icon: DocsIcon,
+        name: "Reports",
+        path: "/Reports",
+      },
+      {
+        icon: PlugInIcon,
+        name: "Tasks",
+        path: "/Tasks",
+      },
+      {
+        icon: PieChartIcon,
+        name: "invoices",
+        path: "/invoices",
+      },
+      {
+        icon: ListIcon,
+        name: "payments",
+        path: "/payments",
+      },
+      {
+        icon: PageIcon,
+        name: "automation",
+        path: "/automation",
+      },
+      
   //     {
   //       icon: PageIcon,
   //       name: "Forms",

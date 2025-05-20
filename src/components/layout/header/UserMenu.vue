@@ -67,8 +67,8 @@ const dropdownRef = ref(null)
 
 const menuItems = [
   { href: '/profile', icon: UserCircleIcon, text: 'Edit profile' },
-  { href: '/chat', icon: SettingsIcon, text: 'Account settings' },
-  { href: '/profile', icon: InfoCircleIcon, text: 'Support' },
+  { href: '/settings', icon: SettingsIcon, text: 'Account settings' },
+  { href: '/billing', icon: InfoCircleIcon, text: 'Support' },
 ]
 
 const toggleDropdown = () => {

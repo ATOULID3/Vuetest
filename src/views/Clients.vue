@@ -33,6 +33,32 @@
             </span>
           </div>
           <button
+            @click="exportToExcel"
+            class="inline-flex items-center justify-center rounded-md border border-stroke py-2.5 px-6 text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-strokedark dark:hover:border-primary transition-all duration-200"
+          >
+            <svg class="mr-2" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Export Excel
+          </button>
+          <button
+            @click="exportToPDF"
+            class="inline-flex items-center justify-center rounded-md border border-stroke py-2.5 px-6 text-dark hover:border-primary hover:bg-primary hover:text-white dark:border-strokedark dark:hover:border-primary transition-all duration-200"
+          >
+            <svg class="mr-2" width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Export PDF
+          </button>
+          <button
             @click="openAddClientModal"
             class="inline-flex items-center justify-center rounded-md bg-primary py-2.5 px-6 text-dark hover:bg-opacity-90 transition-all duration-200"
           >
@@ -443,6 +469,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import AdminLayout from '@/components/layout/AdminLayout.vue'
+import * as XLSX from 'xlsx'
+import html2pdf from 'html2pdf.js'
 
 defineOptions({
   name: 'ClientsPage'
@@ -612,5 +640,60 @@ const showClientDetails = (client: Client) => {
 const closeClientDetail = () => {
   showClientDetail.value = false
   selectedClient.value = null
+}
+
+// Export functions
+const exportToExcel = () => {
+  const data = filteredClients.value.map(client => ({
+    'Name': client.name,
+    'Email': client.email,
+    'Phone': client.phone,
+    'Company': client.company,
+    'Status': client.status
+  }))
+
+  const ws = XLSX.utils.json_to_sheet(data)
+  const wb = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(wb, ws, 'Clients')
+  XLSX.writeFile(wb, 'clients.xlsx')
+}
+
+const exportToPDF = () => {
+  const element = document.createElement('div')
+  element.innerHTML = `
+    <h1 style="text-align: center; margin-bottom: 20px;">Clients List</h1>
+    <table style="width: 100%; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color: #f3f4f6;">
+          <th style="border: 1px solid #ddd; padding: 8px;">Name</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Email</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Phone</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Company</th>
+          <th style="border: 1px solid #ddd; padding: 8px;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${filteredClients.value.map(client => `
+          <tr>
+            <td style="border: 1px solid #ddd; padding: 8px;">${client.name}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${client.email}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${client.phone}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${client.company}</td>
+            <td style="border: 1px solid #ddd; padding: 8px;">${client.status}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `
+
+  const opt = {
+    margin: 1,
+    filename: 'clients.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+  }
+
+  html2pdf().set(opt).from(element).save()
 }
 </script> 

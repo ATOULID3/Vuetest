@@ -4,6 +4,19 @@ import Signup from '@/views/Auth/Signup.vue'
 import ForgotPassword from '@/views/Auth/ForgotPassword.vue'
 import Clients from '@/views/Clients.vue'
 import Products from '@/views/Products.vue'
+import HelpView from '@/views/help/HelpView.vue'
+import BillingView from '@/views/billing/BillingView.vue'
+import SettingsView from '@/views/settings/SettingsView.vue'
+import CustomerList from '@/views/customers/CustomerList.vue'
+import DealPipeline from '@/views/deals/DealPipeline.vue'
+import ReportsView from '@/views/reports/ReportsView.vue'
+import TaskList from '@/views/tasks/TaskList.vue'
+import InvoicesListView from '@/views/invoices/InvoicesListView.vue'
+import CreateInvoiceView from '@/views/invoices/CreateInvoiceView.vue'
+import PaymentsView from '@/views/payments/PaymentsView.vue'
+import GenerateDocuments from '@/views/customers/GenerateDocuments.vue'
+import CustomerDocuments from '@/views/customers/CustomerDocuments.vue'
+import Automation from '@/views/automation/Automation.vue'
 
 
 const router = createRouter({
@@ -167,6 +180,123 @@ const router = createRouter({
       component: Products,
       meta: { requiresAuth: true }
     },
+    {
+      path: '/Customers',
+      name: 'Customers',
+      component: CustomerList,
+      meta: { 
+        title: 'Customers',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/DealPipelines',
+      name: 'DealPipelines',
+      component: DealPipeline,
+      meta: { 
+        title: 'DealPipelines',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/Reports',
+      name: 'Reports',
+      component: ReportsView,
+      meta: { 
+        title: 'Reports',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: HelpView,
+      meta: { 
+        title: 'Help',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/Tasks',
+      name: 'Tasks',
+      component: TaskList,
+      meta: { 
+        title: 'Tasks',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/billing',
+      name: 'billing',
+      component: BillingView,
+      meta: { 
+        title: 'Billing',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: SettingsView,
+      meta: { 
+        title: 'Settings',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/invoices',
+      name: 'invoices',
+      component: InvoicesListView,
+      meta: { 
+        title: 'Invoices',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/invoices/create',
+      name: 'create-invoice',
+      component: CreateInvoiceView,
+      meta: { 
+        title: 'Create Invoice',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/automation',
+      name: 'automation',
+      component: Automation,
+      meta: { 
+        title: 'Automation',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/customers/documents',
+      name: 'customer-documents',
+      component: CustomerDocuments,
+      meta: { 
+        title: 'Customer Documents',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/customers/:id/documents',
+      name: 'generate-documents',
+      component: GenerateDocuments,
+      meta: { 
+        title: 'Generate Documents',
+        requiresAuth: true 
+      }
+    },
+    {
+      path: '/payments',
+      name: 'payments',
+      component: PaymentsView,
+      meta: { 
+        title: 'Payments',
+        requiresAuth: true 
+      }
+    }
   ],
 })
 

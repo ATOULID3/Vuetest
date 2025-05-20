@@ -43,6 +43,39 @@
       </router-link>
 
       <router-link
+        to="/profile"
+        class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+        active-class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        Profile
+      </router-link>
+
+      <router-link
+        to="/billing"
+        class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+        active-class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+        </svg>
+        Billing
+      </router-link>
+
+      <router-link
+        to="/help"
+        class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+        active-class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        Help
+      </router-link>
+
+      <router-link
         to="/settings"
         class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
         active-class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
@@ -53,10 +86,52 @@
         </svg>
         Settings
       </router-link>
+
+      <!-- Invoicing & Payments Section -->
+      <div class="px-4 py-2">
+        <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider dark:text-gray-400">
+          Invoicing & Payments
+        </h3>
+      </div>
+
+      <router-link
+        to="/invoices"
+        class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+        active-class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        Invoices List
+      </router-link>
+
+      <router-link
+        to="/invoices/create"
+        class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+        active-class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+        Create Invoice
+      </router-link>
+
+      <router-link
+        to="/payments"
+        class="flex items-center px-4 py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700"
+        active-class="bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white"
+      >
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        Payments Received
+      </router-link>
     </nav>
   </aside>
 </template>
 
 <script setup lang="ts">
-// No additional setup needed
+defineOptions({
+  name: 'AppSidebar'
+})
 </script> 
